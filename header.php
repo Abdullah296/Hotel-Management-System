@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<link rel="icon" href="<?php echo get_template_directory_uri()?>/hms.ico">
+<link rel="icon" href="<?php echo get_template_directory_uri()?>/Images/hms.ico">
 
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">

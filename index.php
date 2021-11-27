@@ -6,7 +6,7 @@
   
 
 <div class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
-  <img class="w3-image" src="<?php echo get_template_directory_uri()?>/scenary.jfif" alt="London" width="1500" height="700">
+  <img class="w3-image" src="<?php echo get_template_directory_uri()?>/Images/scenary.jfif" alt="London" width="1500" height="700">
   <div class="w3-display-middle" style="width:65%">
     <div class="w3-bar w3-black">
       <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Flight');"><i class="fa fa-plane w3-margin-right"></i>Find Rooms</button>
