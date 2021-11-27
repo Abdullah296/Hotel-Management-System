@@ -1,12 +1,53 @@
-<?php get_header();
- ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="icon" href="./hms.ico">
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chaudary Hotel </title>
+    
+    
+    <style>
+    .myLink
+    {
+        display: none
+    }
+    table 
+    {
+        width: 75%;
+        margin-left: auto;
+        margin-right: auto;
+    }
+    td 
+    {
+        text-align: center;
+    }
+        
+    .rooom h2 
+    {
+         padding-left: 170px;
+    }
+    </style>
+    
+    
+</head>
+
+ 
+
+<body>
+
 
 
 
   
 
 <div class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
-  <img class="w3-image" src="<?php echo get_template_directory_uri()?>/Images/scenary.jfif" alt="London" width="1500" height="700">
+  <img class="w3-image" src="./scenary.jfif" alt="London" width="1500" height="700">
   <div class="w3-display-middle" style="width:65%">
     <div class="w3-bar w3-black">
       <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Flight');"><i class="fa fa-plane w3-margin-right"></i>Find Rooms</button>
@@ -28,7 +69,7 @@
         </div>
         <div class="w3-third">
           <label>Category</label>
-          <input class="w3-input w3-border" type="text" placeholder="Luxury">
+          <input class="w3-input w3-border" type="text" placeholder="Arriving at">
         </div>
       </div>
       <p><button class="w3-button w3-dark-grey"  onclick='myfunction();'>Search rooms</button></p>
@@ -57,10 +98,9 @@
 
 
 
-
 <?php
 
-$db = mysqli_connect("localhost","root","","hms");
+$db = mysqli_connect("127.0.0.1:3333","root","","hms");
 
 if(!$db)
 {
@@ -75,38 +115,67 @@ if(!$db)
 
     <table border="2">
     <tr>
-        <td>Sr.No.</td>
-        <td>Portion</td>
+        <td>Room Number.</td>
+        <td>Facilities</td>
         <td>Price</td>
-        <td>Available</td>
     </tr>
 
     <?php
 
 
-    $records = mysqli_query($db,"select * from rooms"); // fetch data from database
+    $records = mysqli_query($db,"select * from room"); // fetch data from database
 
     while($data = mysqli_fetch_array($records))
     {
     ?>
     <tr>
-        <td><?php echo $data['SerialNo']; ?></td>
-        <td><?php echo $data['floor']; ?></td>
-        <td><?php echo $data['Price']; ?></td>
-        <td><?php 
+        <td width="20%"><?php echo $data['Room_Number']; ?></td>
+        <td width="50%">
+            
+            <?php echo '  Area = '; echo $data['Area'];  echo '  sq ft';
+
+            if ($data['Internet']  == 'T') 
+            {
+                    ?>
+                    <br>
+                    <br>
+                    <br>
+                    <i class="fa fa-wifi"></i>
+                    <?php
+            }
+
+            if ($data['BathTub']  == 'T') 
+            {
+                    ?>
+                    
+                    <i class="fa fa-bath"></i>
+                    <?php
+            }
+
+            if ($data['NewsPaper']  == 'T') 
+            {
+                    ?>
+                    
+                    <i class="fa fa-newspaper-o"></i>
+                    <?php
+            }
+
+            if ($data['Iron']  == 'T') 
+            {
+                    ?>
+                    
+                    <i class="fa fa-steam"></i>
+                    <?php
+            }
+          ?>
+    
+
+        </td>
+        <td width="30%">
+            <?php echo $data['Price']; ?>
+            <br><button type="button" onclick="location.href='101.php'">Check Now</button>
+        </td>
         
-        if ($data['Available']  == 1) {
-          
-        ?>
-          <button type="button">Book Now</button>
-        <?php
-        }
-        else
-        {
-          echo "Sorry unavailaible";
-        }
-        
-        ?></td>
     </tr>	
     <?php
     }
@@ -117,6 +186,9 @@ if(!$db)
 
 
 </div>
+
+
+
 
 
 
@@ -149,4 +221,6 @@ document.getElementsByClassName("tablink")[0].click();
 
 
 
-<?php get_footer(); ?>
+
+</body>
+</html>
