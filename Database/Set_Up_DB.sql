@@ -13,7 +13,7 @@ CREATE TABLE `Room`  (
   `Room_Number` int UNSIGNED NOT NULL COMMENT 'A 3 digit Room number 1st digit shows the floor on which room is located, and other 2 digit show number of the room on that floor.',
   `Area` float UNSIGNED NOT NULL COMMENT 'Area of the Room in feet squar',
   `Price` decimal(10, 2) NOT NULL COMMENT 'Booking price of the room in PKR.',
-  `Discription` mediumblob NOT NULL COMMENT 'Discription contains all the serivices and full details of the room.',
+  `Discription` varchar(1000) NOT NULL COMMENT 'Discription contains all the serivices and full details of the room.',
   `Internet` char(1) CHARACTER SET ascii NOT NULL DEFAULT 'T' COMMENT 'Internet is one of the serivices of the room.\r\n\r\nIt is one char long and can have only two different values T means True and F means False, here True means serivice is available and Flase means service is not available.\r\n\r\nBy Default its value is T.',
   `BathTub` char(1) NOT NULL DEFAULT 'T' COMMENT 'BathTub is one of the serivices of the room.\r\n\r\nIt is one char long and can have only two different values T means True and F means False, here True means serivice is available and Flase means service is not available.\r\n\r\nBy Default its value is T.',
   `NewsPaper` char(1) NOT NULL DEFAULT 'T' COMMENT 'News Paper is one of the serivices of the room.\r\n\r\nIt is one char long and can have only two different values T means True and F means False, here True means serivice is available and Flase means service is not available.\r\n\r\nBy Default its value is T.',
