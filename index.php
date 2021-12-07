@@ -99,9 +99,9 @@
                      ON (
                          Booking.Room_Number = room.Room_Number AND
                          NOT (
-                             (booking.From_Date < '20211216' and booking.To_Date < '20211216')
+                             (booking.From_Date < '20211211' and booking.To_Date < '20211211')
                              OR
-                             (booking.From_Date > '20211216' and booking.To_Date > '20211216')
+                             (booking.From_Date > '20211211' and booking.To_Date > '20211211')
                              )
                          )
                  WHERE
