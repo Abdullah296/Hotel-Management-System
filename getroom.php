@@ -5,10 +5,10 @@
 $config = include 'config.php';
 
 // setting DataBase configs as specified in config.php file
-$dbhost = $config["DB_Host"];
-$dbuser = $config["DB_User"];
-$dbpass = $config["DB_Pass"];
-$db = $config["DB_Name"];
+$dbhost = DB_HOST;
+$dbuser = DB_USERNAME;
+$dbpass = DB_PASSWORD;
+$db = DB_NAME;
 
 $mysqli = new mysqli($dbhost, $dbuser, $dbpass,$db);
 if($mysqli->connect_error) {
