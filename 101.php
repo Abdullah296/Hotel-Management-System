@@ -88,7 +88,7 @@
          Following are the facilities are available in this rooms.
       </p>
       <?php
-         include 'Connection.php';
+         include './Ajax/Connection.php';
          $conn = OpenCon();
          
              $records = mysqli_query($conn,"select * from room where Room_Number='$var_value'"); // fetch data from database
@@ -193,13 +193,13 @@
                </div>
                <div class="form-group col-md-6">
                   <label for="Child">User ID</label>
-                  <input type="text" class="form-control" id="UID" name="UID" placeholder="">
+                  <input type="text" class="form-control" id="UID" name="UID" placeholder="" required>
                </div>
             </div>
             <div class="form-group">
                <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="gridCheck">
-                  <label class="form-check-label" for="gridCheck">
+                  <label class="form-check-label" for="gridCheck" required>
                   Accept all term and conditions
                   </label>
                </div>
@@ -229,7 +229,7 @@
             alert("Verify your email");
             document.getElementById("UID").disabled = false;
         }
-        xhttp.open("GET", "verifymail.php?q="+str+"&l="+str1+"&j="+str2);
+        xhttp.open("GET", "./Ajax/verifymail.php?q="+str+"&l="+str1+"&j="+str2);
         xhttp.send();
         }
 

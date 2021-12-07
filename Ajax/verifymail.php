@@ -76,7 +76,7 @@ $mail->SetFrom("abd290600@gmail.com", "Chaudary Hotel");
 //$mail->AddReplyTo("reply-to-email@domain", "reply-to-name");
 //$mail->AddCC("cc-recipient-email@domain", "cc-recipient-name");
 $mail->Subject = "Verify your Email";
-$content = "<b>Dear".$fname." ".$lname."<br>Thanks for registration, You user id is  ".$UID."</b><br>Kindy enter that to verify your email.";
+$content = "<b>Dear ".$fname." ".$lname."</b><br>Thanks for registration, You user id is  ".$UID."<br>Kindy enter that to verify your email.";
 
 $mail->MsgHTML($content); 
 if(!$mail->Send()) {

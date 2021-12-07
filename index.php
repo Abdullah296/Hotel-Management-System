@@ -43,155 +43,169 @@
                <h3>Find Rooms</h3>
                <div class="w3-row-padding" style="margin:0 -16px;">
                   <div class="w3-third">
-                     <label>Date</label>
+                     <label>From:</label>
                      <input class="w3-input w3-border" type="date" name="RDate" id="RDate" min="<?php echo date("Y-m-d"); ?>" >
+                  </div>
+                  <div class="w3-third">
+                     <label>To: </label>
+                     <input class="w3-input w3-border" type="date" name="RDate" id="RDate1" min="<?php echo date("Y-m-d"); ?>" >
                   </div>
                   <div class="w3-third">
                      <label>No of Bed rooms</label>
                      <input class="w3-input w3-border" type="text" placeholder="Bed rooms i-e 1">
                   </div>
-                  <div class="w3-third">
-                     <label>Category</label>
-                     <input class="w3-input w3-border" type="text" placeholder="Arriving at">
-                  </div>
                </div>
-               <p><button  class="w3-button w3-dark-grey"  onclick='myfunction();'>Search rooms</button></p>
+               <p><button  class="w3-button w3-dark-grey"  onclick='showRoom();'>Search rooms</button></p>
             </div>
             <div id="Hotel" class="w3-container w3-white w3-padding-16 myLink">
                <h3>Reservation</h3>
-               <label>Please Enter your ID number.</label>
-               <input class="w3-input w3-border" type="text" placeholder="123321">
-               <p><button class="w3-button w3-dark-grey">Check Now</button></p>
+               <div class="w3-row-padding" style="margin:0 -16px;">
+                  <div class="w3-half">
+                     <label>Please Enter your Booking ID number.</label>
+                     <input class="w3-input w3-border" type="text" id="B_ID" placeholder="123321">
+                  </div>
+                  <div class="w3-half">
+                     <label>Please Enter your User ID number.</label>
+                     <input class="w3-input w3-border" type="text" id="U_ID" placeholder="123321">
+                  </div>
+               </div>
+               <p><button class="w3-button w3-dark-grey" onclick='CheckRoom();'>Check Now</button></p>
             </div>
             <div id="Car" class="w3-container w3-white w3-padding-16 myLink">
                <h3> Cancel Now </h3>
-               <label>Please Enter your Reservation number.</label>
-               <input class="w3-input w3-border" type="text" placeholder="123321">
-               <p><button class="w3-button w3-dark-grey">Cancel Now</button></p>
+               <div class="w3-row-padding" style="margin:0 -16px;">
+                  <div class="w3-half">
+                     <label>Please Enter your Booking ID number.</label>
+                     <input class="w3-input w3-border" type="text" id="C1_ID" placeholder="123321">
+                  </div>
+                  <div class="w3-half">
+                     <label>Please Enter your User ID number.</label>
+                     <input class="w3-input w3-border" type="text" id="C2_ID" placeholder="123321">
+                  </div>
+               </div>
+               <p><button class="w3-button w3-dark-grey" onclick='CancelRoom();'>Cancel Now</button></p>
             </div>
          </div>
       </div>
+      <div id="txtHint">
+         <h5>     &emsp;&emsp; Please Enter Date and Check to find the Available room.</h5>
+      </div>
       <?php
-         include 'Connection.php';
-         $conn = OpenCon();
+         $var = isset($_GET['var']) ? $_GET['var'] : '';
+         if($var == 1)
+         {
+            echo '<script language="javascript">';
+            echo 'alert("Congurations, Your Booking successful  and Your User Data is also Saved.")';
+            echo '</script>';
+         }
+         elseif($var == 2)
+         {
+            echo '<script language="javascript">';
+            echo 'alert("Unsuccessful, You have provided wrong authentication i-e Email and user id. Kindly recheck.")';
+            echo '</script>';
+         }
+         elseif($var == 3)
+         {
+            echo '<script language="javascript">';
+            echo 'alert("Congurations, Your booking is successful. Thanks for booking again with us.")';
+            echo '</script>';
+         }
+         elseif($var == 4)
+         {
+            echo '<script language="javascript">';
+            echo 'alert("No room Found.")';
+            echo '</script>';
+         }
          
          ?>
-      <div class="rooom" style="display: none" id="rooom">
-         <h2>
-            <t>
-            Rooms
-         </h2>
-         <table border="2">
-            <tr>
-               <td>Room Number.</td>
-               <td>Facilities</td>
-               <td>Price</td>
-            </tr>
-            <?php
-               $records = mysqli_query($conn,"
-               
-               SELECT
-                   room.*
-                 FROM
-                     room
-                 LEFT JOIN
-                     Booking
-                     ON (
-                         Booking.Room_Number = room.Room_Number AND
-                         NOT (
-                             (booking.From_Date < '20211211' and booking.To_Date < '20211211')
-                             OR
-                             (booking.From_Date > '20211211' and booking.To_Date > '20211211')
-                             )
-                         )
-                 WHERE
-                     booking.Room_Number IS NULL;
-               
-               "); // fetch data from database
-               
-               while($data = mysqli_fetch_array($records))
-               {
-               ?>
-            <tr>
-               <td width="20%"><?php echo $data['Room_Number']; ?></td>
-               <td width="50%">
-                  <?php echo '  Area = '; echo $data['Area'];  echo '  sq ft';
-                     if ($data['Internet']  == 'T') 
-                     {
-                             ?>
-                  <br>
-                  <br>
-                  <br>
-                  <i class="fa fa-wifi"></i>
-                  <?php
-                     }
-                     
-                     if ($data['BathTub']  == 'T') 
-                     {
-                             ?>
-                  <i class="fa fa-bath"></i>
-                  <?php
-                     }
-                     
-                     if ($data['NewsPaper']  == 'T') 
-                     {
-                             ?>
-                  <i class="fa fa-newspaper-o"></i>
-                  <?php
-                     }
-                     
-                     if ($data['Iron']  == 'T') 
-                     {
-                             ?>
-                  <i class="fa fa-steam"></i>
-                  <?php
-                     }
-                     ?>
-               </td>
-               <td width="30%">
-                  <?php echo $data['Price']; 
-                     $roomno=$data['Room_Number'];
-                     ?>
-                  <br><button name="btnn" type="submit"  onclick="location.href='101.php?varname=<?php echo $roomno ?>'">Check Now</button>
-               </td>
-            </tr>
-            <?php
-               }
-               ?>
-         </table>
-         <?php
-            CloseCon($conn);    
-                
-                ?>
-      </div>
-      <p id="demo"></p>
       <script>
-         function myfunction(){    
-           
-         var value1 = document.getElementById('RDate').value;
-         document.getElementById("demo").innerHTML = value1;
-         document.getElementById("rooom").style.display = "block";   
-         }
+         // Get the modal
          
          
          
          
-         function openLink(evt, linkName) {
-           var i, x, tablinks;
-           x = document.getElementsByClassName("myLink");
-           for (i = 0; i < x.length; i++) {
-             x[i].style.display = "none";
-           }
-           tablinks = document.getElementsByClassName("tablink");
-           for (i = 0; i < x.length; i++) {
-             tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
-           }
-           document.getElementById(linkName).style.display = "block";
-           evt.currentTarget.className += " w3-red";
-         }
+                 function showRoom(){
+                 var str = document.getElementById('RDate').value;
+                 var str1 = document.getElementById('RDate1').value;
          
-         // Click on the first tablink on load
-         document.getElementsByClassName("tablink")[0].click();
+                 if (str == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter From Date";
+                     return;
+                 }
+                 if (str1 == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter To Date";
+                     return;
+                 }
+                 const xhttp = new XMLHttpRequest();
+                 xhttp.onload = function() {
+                     document.getElementById("txtHint").innerHTML = this.responseText;
+                 }
+                 xhttp.open("GET", "./Ajax/getroom.php?q="+str+"&p="+str1);
+                 xhttp.send();
+                 }
+         
+                 function CheckRoom(){
+                 var str = document.getElementById('B_ID').value;
+                 var str1 = document.getElementById('U_ID').value;
+         
+                 if (str == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter Booking ID";
+                     return;
+                 }
+                 if (str1 == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter User ID";
+                     return;
+                 }
+                 const xhttp = new XMLHttpRequest();
+                 xhttp.onload = function() {
+                     document.getElementById("txtHint").innerHTML = this.responseText;
+                 }
+                 xhttp.open("GET", "./Ajax/checkroom.php?q="+str+"&p="+str1);
+                 xhttp.send();
+                 }
+         
+         
+         
+                 function CancelRoom(){
+                 var str = document.getElementById('C1_ID').value;
+                 var str1 = document.getElementById('C2_ID').value;
+         
+                 if (str == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter Booking ID";
+                     return;
+                 }
+                 if (str1 == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter User ID";
+                     return;
+                 }
+                 const xhttp = new XMLHttpRequest();
+                 xhttp.onload = function() {
+                     document.getElementById("txtHint").innerHTML = this.responseText;
+                 }
+                 xhttp.open("GET", "./Ajax/Cancelreservation.php?q="+str+"&p="+str1);
+                 xhttp.send();
+                 }
+         
+         
+         
+         
+               function openLink(evt, linkName) {
+                    var i, x, tablinks;
+                    x = document.getElementsByClassName("myLink");
+                    for (i = 0; i < x.length; i++) {
+                      x[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tablink");
+                    for (i = 0; i < x.length; i++) {
+                      tablinks[i].className = tablinks[i].className.replace(" w3-red", "");
+                    }
+                    document.getElementById(linkName).style.display = "block";
+                    evt.currentTarget.className += " w3-red";
+                  }
+                  
+                  // Click on the first tablink on load
+                  document.getElementsByClassName("tablink")[0].click();
+               
       </script>
    </body>
 </html>

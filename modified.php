@@ -1,6 +1,12 @@
 <html>
    <body>
       <?php
+      use PHPMailer\PHPMailer\PHPMailer;
+      use PHPMailer\PHPMailer\Exception;
+      require 'PHPMailer-master/src/Exception.php';
+      require 'PHPMailer-master/src/PHPMailer.php';
+      require 'PHPMailer-master/src/SMTP.php';
+
          $fname = isset($_POST['FName']) ? $_POST['FName'] : '';
          $lname = isset($_POST['LName']) ? $_POST['LName'] : '';
          $email = isset($_POST['Email']) ? $_POST['Email'] : '';
@@ -23,7 +29,7 @@
           Good morning1 UID <?php echo $UID; ?><br>
 
           <?php
-            include 'Connection.php';
+            include './Ajax/Connection.php';
             $conn = OpenCon();
 
 
@@ -83,7 +89,7 @@
                       {
                         echo "No Record Found";
                         // entered wrong authentication cant book room.  
-                        header('Location: test.php?var=2');
+                        header('Location: index.php?var=2');
 
                       }
                       else
@@ -97,7 +103,7 @@
                         if ($conn->query($sql) === TRUE) 
                         {
                           //room book with existing user
-                            header('Location: test.php?var=3');
+                            header('Location: index.php?var=3');
                             echo "Successful";
                           } 
                           else 
@@ -105,6 +111,69 @@
                             echo "Error: " . $sql . "<br>" . $conn->error;
                           }
                       
+
+
+
+
+
+                          $sql = "SELECT Booking_ID FROM booking where User_ID='$UID' And To_Date='$todate'";
+                          $result = $conn->query($sql);
+                          
+                          $bid = '';
+                          if ($result->num_rows > 0)
+                            {
+                            // output data of each row
+
+                            while($row = $result->fetch_assoc())
+                              {
+                                $bid = $row["Booking_ID"];
+                              }
+
+                              echo $bid;
+                          } 
+                          else 
+                          {
+                            echo "0 results";
+                          }
+
+                          
+                          
+                          $mail = new PHPMailer();
+                          $mail->IsSMTP();
+                          $mail->Mailer = "smtp";
+
+                          $mail->SMTPDebug  = 1;  
+                          $mail->SMTPAuth   = TRUE;
+                          $mail->SMTPSecure = "tls";
+                          $mail->Port       = 587;
+                          $mail->Host       = "smtp.gmail.com";
+                          $mail->Username   = "abd290600@gmail.com";
+                          $mail->Password   = "zxcbnmlkjdsa098";
+
+
+                          $mail->IsHTML(true);
+                          $mail->AddAddress("$email", "$fname");
+                          $mail->SetFrom("abd290600@gmail.com", "Chaudary Hotel");
+                          //$mail->AddReplyTo("reply-to-email@domain", "reply-to-name");
+                          //$mail->AddCC("cc-recipient-email@domain", "cc-recipient-name");
+                          $mail->Subject = "Room Booked";
+                          $content = "<b>Dear".$fname." ".$lname."<br>Thanks for booking room with us. <br>You user id is  ".$UID."<br> You Booking id is  ".$bid."</b> <br>Kindy enter that to verify your email.";
+
+                          $mail->MsgHTML($content); 
+                          if(!$mail->Send()) {
+                            //echo "Error while sending Email.";
+                            var_dump($mail);
+                          } else {
+                            //echo "Verify your Email.";
+                          }
+                          //echo "Verify your Email.";                          
+
+                          
+
+
+
+
+
                       }
 
 
@@ -116,7 +185,7 @@
              else
              {
                // var = 0  mean no room
-              header('Location: test.php?var=4');
+              header('Location: index.php?var=4');
              }
             
 
