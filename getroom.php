@@ -1,10 +1,14 @@
 
 <?php
 
-$dbhost = "127.0.0.1:3333";
-$dbuser = "root";
-$dbpass = "";
-$db = "hms";
+// getting configs
+$config = include 'config.php';
+
+// setting DataBase configs as specified in config.php file
+$dbhost = $config["DB_Host"];
+$dbuser = $config["DB_User"];
+$dbpass = $config["DB_Pass"];
+$db = $config["DB_Name"];
 
 $mysqli = new mysqli($dbhost, $dbuser, $dbpass,$db);
 if($mysqli->connect_error) {
