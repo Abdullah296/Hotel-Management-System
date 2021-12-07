@@ -1,0 +1,2 @@
+# all the pakages installed by Composer is ignored
+vendor/*
