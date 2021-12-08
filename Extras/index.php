@@ -8,7 +8,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Chaudary Hotel </title>
+      <title>Engineer Hotel </title>
       <style>
          .myLink
          {
@@ -28,9 +28,21 @@
          {
          padding-left: 170px;
          }
+         .centered 
+         {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            }
       </style>
    </head>
    <body>
+   <div class="container">
+         <img src="./scenary.jfif" alt="Snow" style="width:100%;">
+         <div class="centered">Welcome to Engineer Hotel</div>
+   </div>
+   
       <div class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
          <img class="w3-image" src="./scenary.jfif" alt="London" width="1500" height="700">
          <div class="w3-display-middle" style="width:65%">

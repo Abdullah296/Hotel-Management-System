@@ -1,14 +1,14 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <link rel="icon" href="./hms.ico">
+      <link rel="icon" href="./image/hms.ico">
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Chaudary Hotel </title>
+      <title>Engineer Hotel </title>
       <style>
          .myLink
          {
@@ -28,11 +28,23 @@
          {
          padding-left: 170px;
          }
+         .centered 
+         {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            }
       </style>
    </head>
    <body>
+   <div class="container">
+         <img src="./image/download.jpg" alt="Snow" style="width:100%; height: 400px;">
+         <div class="centered"><h2 style="color:green"><b>Welcome to Engineer Hotel</b></h2></div>
+   </div>
+
       <div class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
-         <img class="w3-image" src="./scenary.jfif" alt="London" width="1500" height="700">
+         <img class="w3-image" src="./image/download (2).jpg" alt="London" style="width:100%; height: 350px;">
          <div class="w3-display-middle" style="width:65%">
             <div class="w3-bar w3-black">
                <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Flight');"><i class="fa fa-plane w3-margin-right"></i>Find Rooms</button>
@@ -88,7 +100,7 @@
          </div>
       </div>
       <div id="txtHint">
-         <h5>     &emsp;&emsp; Please Enter Date and Check to find the Available room.</h5>
+         <h5>     &emsp;&emsp; Please Enter Date and Check to find the Available room.<br><br><br><br><br><br><br></h5>
       </div>
       <?php
          $var = isset($_GET['var']) ? $_GET['var'] : '';
@@ -114,6 +126,12 @@
          {
             echo '<script language="javascript">';
             echo 'alert("No room Found.")';
+            echo '</script>';
+         }
+         elseif($var == 5)
+         {
+            echo '<script language="javascript">';
+            echo 'alert("Room not avaiable for the given dates.")';
             echo '</script>';
          }
          
