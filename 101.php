@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
    <head>
-      <link rel="icon" href="./hms.ico">
+      <link rel="icon" href="./image/hms.ico">
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -9,7 +9,7 @@
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
-      <title>Chaudary Hotel </title>
+      <title>Engineer Hotel </title>
       <style>
          .myLink
          {
@@ -34,49 +34,21 @@
          width:400px;
          }
          #LABEL { visibility: hidden;}
+         .centered 
+         {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            }
       </style>
    </head>
    <body>
-      <div class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
-         <img class="w3-image" src="./scenary.jfif" alt="London" width="1500" height="700">
-         <div class="w3-display-middle" style="width:65%">
-            <div class="w3-bar w3-black">
-               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Flight');"><i class="fa fa-plane w3-margin-right"></i>Find Rooms</button>
-               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Hotel');"><i class="fa fa-bed w3-margin-right"></i>Check Reservation</button>
-               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Car');"><i class="fa fa-car w3-margin-right"></i>Cancel Reservation</button>
-            </div>
-            <div id="Flight" class="w3-container w3-white w3-padding-16 myLink">
-               <h3>Find Rooms</h3>
-               <div class="w3-row-padding" style="margin:0 -16px;">
-                  <div class="w3-third">
-                     <label>Date</label>
-                     <input class="w3-input w3-border" type="date" id="birthday" >
-                  </div>
-                  <div class="w3-third">
-                     <label>No of Bed rooms</label>
-                     <input class="w3-input w3-border" type="text" placeholder="Bed rooms i-e 1">
-                  </div>
-                  <div class="w3-third">
-                     <label>Category</label>
-                     <input class="w3-input w3-border" type="text" placeholder="Arriving at">
-                  </div>
-               </div>
-               <p><button class="w3-button w3-dark-grey"  onclick='myfunction();'>Search rooms</button></p>
-            </div>
-            <div id="Hotel" class="w3-container w3-white w3-padding-16 myLink">
-               <h3>Reservation</h3>
-               <label>Please Enter your ID number.</label>
-               <input class="w3-input w3-border" type="text" placeholder="123321">
-               <p><button class="w3-button w3-dark-grey">Check Now</button></p>
-            </div>
-            <div id="Car" class="w3-container w3-white w3-padding-16 myLink">
-               <h3> Cancel Now </h3>
-               <label>Please Enter your Reservation number.</label>
-               <input class="w3-input w3-border" type="text" placeholder="123321">
-               <p><button class="w3-button w3-dark-grey">Cancel Now</button></p>
-            </div>
-         </div>
-      </div>
+   <div class="container" style="max-width:1500px">
+         <img src="./image/download.jpg" alt="Snow" style="width:100%; height: 400px;">
+         <div class="centered"><h2 style="color:green"><b> Welcome to Engineer Hotel </b></h2></div>
+   </div>
+      
       <h2 > 
          Room - 
          <?php
@@ -88,7 +60,7 @@
          Following are the facilities are available in this rooms.
       </p>
       <?php
-         include 'Connection.php';
+         include './Ajax/Connection.php';
          $conn = OpenCon();
          
              $records = mysqli_query($conn,"select * from room where Room_Number='$var_value'"); // fetch data from database
@@ -149,7 +121,7 @@
          <form action="modified.php?varname=<?php echo $var_value ?>" method = "post" >
             <div class="form-row">
                <div class="form-group col-md-12">
-                  <select class="form-control" name="country" id="country" onchange="dynamicchange()" >
+                  <select class="form-control" name="country" id="country" onchange="dynamicchange()" required >
                      <option value="#">-Select-</option>
                      <option value="Existing">Existing</option>
                      <option value="New">New</option>
@@ -193,18 +165,27 @@
                </div>
                <div class="form-group col-md-6">
                   <label for="Child">User ID</label>
-                  <input type="text" class="form-control" id="UID" name="UID" placeholder="">
+                  <input type="text" class="form-control" id="UID" name="UID" placeholder="" required>
                </div>
             </div>
             <div class="form-group">
                <div class="form-check">
                   <input class="form-check-input" type="checkbox" id="gridCheck">
-                  <label class="form-check-label" for="gridCheck">
+                  <label class="form-check-label" for="gridCheck" required>
                   Accept all term and conditions
                   </label>
                </div>
             </div>
-            <button type="submit" class="btn btn-primary">Book Now</button>
+            <div class="form-row">
+               <div class="form-group col-md-3">
+                  <button type="submit" class="btn btn-primary" id="BUTTON2" >Book Now</button>
+               </div>
+               <div class="form-group col-md-3">
+                  <button class="btn btn-primary" onclick='forgetUID();' id="BUTTON3">Forget UID</button>
+               </div>
+            </div>
+            
+            
          </form>
       </div>
       <?php   
@@ -213,8 +194,40 @@
              ?>
       <script>
          // Tabs
+         document.getElementById("FName").disabled = true;
+         document.getElementById("LName").disabled = true;
+         document.getElementById("Email").disabled = true;
+         document.getElementById("UID").disabled = true;
+         document.getElementById("Fromdate").disabled = true;
+         document.getElementById("todate").disabled = true;
+         document.getElementById("Adult").disabled = true;
+         
+         document.getElementById("Button1").style.display="none";
+         document.getElementById("BUTTON2").style.display="none";
+         document.getElementById("BUTTON3").style.display="none";
 
-         function verifymail(){
+
+         function forgetUID()
+         {
+            var str = document.getElementById('Email').value;
+            if (str == "") 
+            {
+               alert("Enter correct e-mail")
+               return;
+            }
+
+            const xhttp = new XMLHttpRequest();
+            xhttp.onload = function() 
+            {
+               alert(this.responseText.split('\n')[0]);
+
+            }
+            xhttp.open("GET", "./Ajax/forgetUID.php?q="+str);
+            xhttp.send();
+
+         }
+
+        function verifymail(){
         
         var str = document.getElementById('Email').value;
         var str1 = document.getElementById('FName').value;
@@ -226,10 +239,11 @@
         }
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function() {
-            alert("Verify your email");
+            alert(this.responseText.split('\n')[0]);
+            
             document.getElementById("UID").disabled = false;
         }
-        xhttp.open("GET", "verifymail.php?q="+str+"&l="+str1+"&j="+str2);
+        xhttp.open("GET", "./Ajax/verifymail.php?q="+str+"&l="+str1+"&j="+str2);
         xhttp.send();
         }
 
@@ -242,6 +256,9 @@
                document.getElementById("LName").disabled = true;
                document.getElementById("Email").disabled = false;
                document.getElementById("UID").disabled = false;
+               document.getElementById("Fromdate").disabled = false;
+               document.getElementById("todate").disabled = false;
+               document.getElementById("Adult").disabled = false;
                
 
                document.getElementById("FName").required = false;
@@ -249,6 +266,8 @@
                document.getElementById("UID").required = true;
 
                document.getElementById("Button1").style.display="none";
+               document.getElementById("BUTTON2").style.display="block";
+               document.getElementById("BUTTON3").style.display="block";
                console.log($name);
             }
             if($name == "New")
@@ -257,12 +276,17 @@
                document.getElementById("LName").disabled = false;
                document.getElementById("Email").disabled = false;
                document.getElementById("UID").disabled = true;
+               document.getElementById("Fromdate").disabled = false;
+               document.getElementById("todate").disabled = false;
+               document.getElementById("Adult").disabled = false;
 
                document.getElementById("FName").required = true;
                document.getElementById("Email").required = true;
                document.getElementById("UID").required = false;
                
                document.getElementById("Button1").style.display="block";
+               document.getElementById("BUTTON2").style.display="block";
+               document.getElementById("BUTTON3").style.display="none";
                console.log($name);
             }
          }

@@ -1,13 +1,6 @@
 <?php
-$dbhost = "127.0.0.1:3333";
-$dbuser = "root";
-$dbpass = "";
-$db = "hms";
-
-$mysqli = new mysqli($dbhost, $dbuser, $dbpass,$db);
-if($mysqli->connect_error) {
-  exit('Could not connect');
-}
+include 'Connection.php';
+$mysqli = OpenCon();
 
 $sql = "SELECT * FROM  booking WHERE Booking_ID = ? And User_ID= ?";
 
