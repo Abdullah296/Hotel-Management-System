@@ -1,6 +1,10 @@
 <html>
    <body>
       <?php
+      require('config.php');
+
+      
+      $token=$_POST['stripeToken'];
       use PHPMailer\PHPMailer\PHPMailer;
       use PHPMailer\PHPMailer\Exception;
       require 'PHPMailer-master/src/Exception.php';
@@ -25,8 +29,8 @@
           Welcome todate <?php echo $todate; ?><br>
           Welcome fromdate <?php echo $fromdate; ?><br>
           Welcome city <?php echo $city; ?><br>
-          Good morning roomno <?php echo $roomno; ?><br>
-          Good morning1 UID <?php echo $UID; ?><br>
+          Welcome roomno <?php echo $roomno; ?><br>
+          Welcome UID <?php echo $UID; ?><br>
 
           <?php
             include './Ajax/Connection.php';
@@ -41,19 +45,20 @@
               // output data of each row
               while($row = $result->fetch_assoc()) 
               {
+                echo "Room Found";
                 $price = $row["Price"];
               }
             } 
             else
             {
-              echo "0 results";
+              echo "No such room find";
             }
 
             if($price != '')
             {
 
 
-              $sql = "SELECT room.* FROM room LEFT JOIN Booking ON ( Booking.Room_Number = room.Room_Number AND NOT ( (booking.From_Date < '20211208' and booking.To_Date < '20211209') OR (booking.From_Date > '20211208' and booking.To_Date > '20211209') ) ) WHERE booking.Room_Number = 103";
+              $sql = "SELECT room.* FROM room LEFT JOIN Booking ON ( Booking.Room_Number = room.Room_Number AND NOT ( (booking.From_Date < '$fromdate' and booking.To_Date < '$todate') OR (booking.From_Date > '$fromdate' and booking.To_Date > '$todate') ) ) WHERE booking.Room_Number = '$roomno'";
               $result = $conn->query($sql);
                       
                       $id = '';
@@ -65,26 +70,47 @@
                           {
                           $id = $row["Room_Number"];
                           }
+                          echo "Enter Right Dates";
                       } 
                       else 
                       {
-                        echo "0 results";
+                        echo "Enter Wrong Dates";
                       }
-                  echo $id."You are good";
+                  //echo $id."You are good";
                   if($id != '')
                   {
+                   //echo "Room not found for such dates";
+                    //header('Location: index.php?var=2');
+                    ?>
+                    <script>
+                    if(!alert('Room not found for such dates')){window.location.href = "index.php";}
+                    </script>
 
-                    header('Location: index.php?var=5');
+                    <?php
                   }
                   else
                   {
-
+                    echo "Room  found for such dates";
 
 
                     if($UID == '')
                     {
-                      echo "User Id empty";
-                        
+                      //echo "Your does not enter User ID";
+                      //header('Location: index.php?var=3');
+                        //echo "User Id empty";
+                        //if(!alert('User ID empty')){window.location.reload('index.php');}
+
+                        ?>
+                    <script>
+                        if(!alert('User ID empty')){
+                          //window.location.reload('index.php');
+                          window.location.href = "index.php";
+                          
+                          
+                          }
+                    </script>
+
+                    <?php
                     }
   
                     elseif($UID != '')
@@ -101,12 +127,12 @@
   
                           while($row = $result->fetch_assoc())
                             {
-                            $id = $row["First_Name"];
+                              $id = $row["First_Name"];
                             }
                         } 
                         else 
                         {
-                          echo "0 results";
+                          echo "Your User id and Email is not correct kindly check";
                         }
   
   
@@ -115,9 +141,16 @@
   
                         if($id == '')
                         {
-                          echo "No Record Found";
+                          //echo "No Record Found";
                           // entered wrong authentication cant book room.  
-                          header('Location: index.php?var=2');
+                          //header('Location: index.php?var=4');
+                          //if(!alert('entered wrong authentication cant book room')){window.location.reload('index.php');}
+                          ?>
+                          <script>
+                          if(!alert('entered wrong authentication cant book room')){window.location.href = "index.php";}
+                          </script>
+      
+                          <?php
   
   
   
@@ -145,8 +178,34 @@
                           
                           if ($conn->query($sql) === TRUE) 
                           {
+                            //if(!alert('Congurations!!')){window.location.reload('index.php');}
+                            ?>
+                            <script>
+                            if(!alert('Congurations!!')){window.location.href = "index.php";}
+                            </script>
+        
+                            <?php
+
+
+                            \Stripe\Stripe::setVerifySslCerts(false);
+
+                            $data=\Stripe\Charge::create(
+                              array(
+                                  "amount"=>500,
+                                  "currency"=>"usd",
+                                  "description"=>"Very good",
+                                  "source"=>$token,
+                              )
+                              );
+                              //echo"<pre>";
+                              //print_r($data);
+
+
+
+
+
                             //room book with existing user
-                              header('Location: index.php?var=3');
+                              
                               echo "Successful";
                             } 
                             else 
@@ -242,8 +301,16 @@
              }
              else
              {
-               // var = 0  mean no room
-              header('Location: index.php?var=4');
+              //echo "No such room find";
+              //header('Location: index.php?var=1');
+              //if(!alert('No such room find!')){window.location.reload('index.php');}
+              ?>
+                          <script>
+              if(!alert('No such room find!')){window.location.href = "index.php";}
+                          </script>
+      
+                          <?php
+
              }
             
 

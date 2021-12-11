@@ -52,6 +52,7 @@
       <h2 > 
          Room - 
          <?php
+            require('config.php');
             $var_value = $_GET['varname'];
             echo $var_value;
             ?>
@@ -113,11 +114,33 @@
       </ul>
       <?php
          }
+         $sql = "SELECT Price FROM room where Room_Number='$var_value'";
+            $result = $conn->query($sql);
+            
+            if ($result->num_rows > 0) 
+            {
+              $price ='0';
+              while($row = $result->fetch_assoc()) 
+              {
+                $price = $row["Price"];
+                $price = $price * 100;
+              }
+            } 
+            else
+            {
+               ?>
+              <script>
+                  alert("NO such room find in our database") ;
+                  
+              </script>
+              <?php
+              header('Location: index.php');
+            }
          ?>
       <h2>
          Book Now
          </h2>
-      <div class="formm" >
+      <div class="formm" id="formm">
          <form action="modified.php?varname=<?php echo $var_value ?>" method = "post" >
             <div class="form-row">
                <div class="form-group col-md-12">
@@ -177,8 +200,20 @@
                </div>
             </div>
             <div class="form-row">
-               <div class="form-group col-md-3">
-                  <button type="submit" class="btn btn-primary" id="BUTTON2" >Book Now</button>
+               <div class="form-group col-md-6">
+               
+               <script 
+                     
+                     src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+                     data-key="<?php echo $publishableKey ?>"; 
+                     data-amount="<?php  echo $price; ?>"
+                     data-name="Engineer Hotel"
+                     data-description="Room - <?php  echo $var_value; ?>"
+                     data-image=""
+                     data-currency="usd"
+                  >
+                  </script>
+
                </div>
                <div class="form-group col-md-3">
                   <button class="btn btn-primary" onclick='forgetUID();' id="BUTTON3">Forget UID</button>
@@ -194,6 +229,9 @@
              ?>
       <script>
          // Tabs
+
+         document.getElementsByClassName("stripe-button-el")[0].disabled=true;
+
          document.getElementById("FName").disabled = true;
          document.getElementById("LName").disabled = true;
          document.getElementById("Email").disabled = true;
@@ -252,6 +290,7 @@
             $name = document.getElementById("country").value;
             if($name == "Existing")
             {    
+               document.getElementsByClassName("stripe-button-el")[0].disabled=false;
                document.getElementById("FName").disabled = true;
                document.getElementById("LName").disabled = true;
                document.getElementById("Email").disabled = false;
@@ -269,9 +308,12 @@
                document.getElementById("BUTTON2").style.display="block";
                document.getElementById("BUTTON3").style.display="block";
                console.log($name);
+               
+
             }
             if($name == "New")
             {    
+               document.getElementsByClassName("stripe-button-el")[0].disabled=false;
                document.getElementById("FName").disabled = false;
                document.getElementById("LName").disabled = false;
                document.getElementById("Email").disabled = false;
@@ -287,6 +329,8 @@
                document.getElementById("Button1").style.display="block";
                document.getElementById("BUTTON2").style.display="block";
                document.getElementById("BUTTON3").style.display="none";
+               
+
                console.log($name);
             }
          }

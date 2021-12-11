@@ -109,30 +109,35 @@
             echo '<script language="javascript">';
             echo 'alert("Congurations, Your Booking successful  and Your User Data is also Saved.")';
             echo '</script>';
+            header('Location: index.php');
          }
          elseif($var == 2)
          {
             echo '<script language="javascript">';
             echo 'alert("Unsuccessful, You have provided wrong authentication i-e Email and user id. Kindly recheck.")';
             echo '</script>';
+            
          }
          elseif($var == 3)
          {
             echo '<script language="javascript">';
             echo 'alert("Congurations, Your booking is successful. Thanks for booking again with us.")';
             echo '</script>';
+            
          }
          elseif($var == 4)
          {
             echo '<script language="javascript">';
             echo 'alert("No room Found.")';
             echo '</script>';
+            
          }
          elseif($var == 5)
          {
             echo '<script language="javascript">';
             echo 'alert("Room not avaiable for the given dates.")';
             echo '</script>';
+            
          }
          
          ?>
