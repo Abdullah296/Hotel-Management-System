@@ -56,7 +56,7 @@
                <div class="w3-row-padding" style="margin:0 -16px;">
                   <div class="w3-third">
                      <label>From:</label>
-                     <input class="w3-input w3-border" type="date" name="RDate" id="RDate" min="<?php echo date("Y-m-d"); ?>" >
+                     <input class="w3-input w3-border" onchange="mintodate()" type="date" name="RDate" id="RDate" min="<?php echo date("Y-m-d"); ?>" >
                   </div>
                   <div class="w3-third">
                      <label>To: </label>
@@ -144,9 +144,18 @@
       <script>
          // Get the modal
          
+                  function mintodate()
+                  {
+                     var str = document.getElementById('RDate').value;
+
+                     if(str != "")
+                     {
+                        document.getElementById('RDate1').setAttribute("min", str);
+                     }
+
+                  }
          
-         
-         
+
                  function showRoom(){
                  var str = document.getElementById('RDate').value;
                  var str1 = document.getElementById('RDate1').value;

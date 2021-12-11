@@ -25,19 +25,25 @@
     <br>
     <br>
     <br>
-
-        <div class="w3-display-middle" style="width:65%">
+    
+        <div class="w3-display-middle" style="width:75%; border:2px solid black;" >
         <br>
         <br>
         <br>
         <br>
-        <br>
-        <br>
+        
             <div class="w3-bar w3-black">
+            <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'check');"><i class="fa fa-car w3-margin-right"></i>Check all reservation</button>
+
                <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Addroom');"><i class="fa fa-plane w3-margin-right"></i>Add Room</button>
                <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'delroom');"><i class="fa fa-bed w3-margin-right"></i>Delete Room</button>
                <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'booroom');"><i class="fa fa-car w3-margin-right"></i>Book Room</button>
+               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'delete');"><i class="fa fa-car w3-margin-right"></i>Delete Booking</button>
+               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'find');"><i class="fa fa-car w3-margin-right"></i>Find empty room</button>
+               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'user');"><i class="fa fa-car w3-margin-right"></i>User info</button>
             </div>
+
+
             <div id="Addroom" class="w3-container w3-white w3-padding-16 myLink">
                <h3>Find Rooms</h3>
                
@@ -111,6 +117,8 @@
                <p><button  class="w3-button w3-dark-grey"  onclick='addRoom();'>Add Room</button></p>
 
             </div>
+
+
             <div id="delroom" class="w3-container w3-white w3-padding-16 myLink">
                <h3>Delete Room</h3>
                <div class="w3-row-padding" style="margin:0 -16px;">
@@ -120,8 +128,12 @@
                   </div>
                   
                </div>
+               <br>
+                <br>
                <p><button class="w3-button w3-dark-grey" onclick='Deleteroom();'>Delete room</button></p>
             </div>
+
+
             <div id="booroom" class="w3-container w3-white w3-padding-16 myLink">
                <h3> Book Room </h3>
                <div class="w3-row-padding" style="margin:0 -16px;">
@@ -134,11 +146,115 @@
                      <input class="w3-input w3-border" type="text" id="C2_ID" placeholder="123321">
                   </div>
                </div>
+               <br>
+                <br>
                <p><button class="w3-button w3-dark-grey" onclick='CancelRoom();'>Cancel Now</button></p>
             </div>
+
+            <div id="delete" class="w3-container w3-white w3-padding-16 myLink">
+               <h3> Delete Booking </h3>
+               <div class="w3-row-padding" style="margin:0 -16px;">
+                  <div class="w3-half">
+                     <label>Please Enter Booking ID number.</label>
+                     <input class="w3-input w3-border" type="text" id="RNo3" placeholder="123321">
+                  </div>
+               </div>
+               <br>
+                <br>
+               <p><button class="w3-button w3-dark-grey" onclick='deletebook();'>Cancel Now</button></p>
+            </div>
+
+
+            <div id="check" class="w3-container w3-white w3-padding-16 myLink">
+               
+               <div class="w3-row-padding" style="margin:0 -16px;">
+
+               <?php
+               include 'Connection.php';
+               $conn = OpenCon();
+
+
+                $sql = "SELECT * FROM booking";
+
+                            $result = $conn->query($sql);
+                            
+                            if ($result->num_rows > 0)
+                              {
+                                echo "<h2><t>Bookings </h2>";
+                                echo "<table border='2' width='100%'>";
+                                echo
+                                                "<tr>
+                                                    <td width='25%'>Room Number.</td>
+                                                    <td width='25%'>User_Id</td>
+                                                    <td width='25%'>From_Date</td>
+                                                    <td width='25%'>To_Date</td>
+                                                </tr>";
+  
+                              while($row = $result->fetch_assoc())
+                                {
+                                    echo        "<tr>
+                                        <td >".$row['Room_Number']."</td>
+                                        <td >".$row['User_ID']."</td>
+                                        <td >". $row['From_Date']."</td>
+                                        <td >". $row['To_Date']."</td>";
+                                }
+                                echo"</td>
+                                            </tr>";
+                            
+                                echo "</table>";
+                                //echo $bid;
+                            } 
+                            else 
+                            {
+                              echo "0 results";
+                            }
+
+                ?>
+
+               </div>
+               
+            </div>
+
+            <div id="user" class="w3-container w3-white w3-padding-16 myLink">
+               <h3> Find User info </h3>
+               <div class="w3-row-padding" style="margin:0 -16px;">
+                  
+                  <div class="w3-half">
+                     <label>User ID number.</label>
+                     <input class="w3-input w3-border" type="text" id="RNo4" placeholder="123321">
+                  </div>
+               </div>
+               <br>
+                <br>
+               <p><button class="w3-button w3-dark-grey" onclick='finduser();'>Find User</button></p>
+               <div id='txtHint1'>
+                </div>
+            </div>
+
+
+            <div id="find" class="w3-container w3-white w3-padding-16 myLink">
+                <h3>Find Rooms</h3>
+               <div class="w3-row-padding" style="margin:0 -16px;">
+                  <div class="w3-half">
+                     <label>From:</label>
+                     <input class="w3-input w3-border" onchange="mintodate()" type="date" name="RDate" id="RDate" min="<?php echo date("Y-m-d"); ?>" >
+                  </div>
+                  <div class="w3-half">
+                     <label>To: </label>
+                     <input class="w3-input w3-border" type="date" name="RDate" id="RDate1" min="<?php echo date("Y-m-d"); ?>" >
+                  </div>
+                  
+               </div>
+               <br>
+                <br>
+               <p><button  class="w3-button w3-dark-grey"  onclick='showRoom();'>Search rooms</button></p>
+               <div id="txtHint">
+                </div>
+               
+            </div>
+
          </div>
-      </div>
-      
+    </div>
 
 
 
@@ -148,15 +264,90 @@
 
 
 <script>
-function Deleteroom()
+    function finduser()
+    {
+        var str1 = document.getElementById('RNo4').value;
+        if(str1 == '')
+        {
+            alert('Enter User Id');
+            return;
+        }
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            document.getElementById("txtHint1").innerHTML = this.responseText;
+        }
+        xhttp.open("GET", "updateform.php?opt=5&a="+str1);
+        xhttp.send();
+    }
+
+    function Deleteroom()
+    {
+        var str1 = document.getElementById('Rno1').value;
+        if(str1 == '')
+        {
+            alert('Enter Room Number');
+            return;
+        }
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            alert(this.responseText);
+        }
+        xhttp.open("GET", "updateform.php?opt=3&a="+str1);
+        xhttp.send();
+
+    }
+
+    function showRoom()
+    {
+                 var str = document.getElementById('RDate').value;
+                 var str1 = document.getElementById('RDate1').value;
+         
+                 if (str == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter From Date";
+                     return;
+                 }
+                 if (str1 == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter To Date";
+                     return;
+                 }
+                 const xhttp = new XMLHttpRequest();
+                 xhttp.onload = function() {
+                     document.getElementById("txtHint").innerHTML = this.responseText;
+                     //document.getElementById("txtHint").innerHTML = "You are good";
+                 }
+                 xhttp.open("GET", "../Ajax/getroom.php?q="+str+"&p="+str1);
+                 xhttp.send();
+    }
+
+    function mintodate()
+                  {
+                     var str = document.getElementById('RDate').value;
+
+                     if(str != "")
+                     {
+                        document.getElementById('RDate1').setAttribute("min", str);
+                     }
+
+                  }
+function deletebook()
 {
-    var str1 = document.getElementById('RNo1').value;
+    var str1 = document.getElementById('RNo3').value;
     if(str1 == '')
     {
-        alert('Enter Room Number');
+        alert('Enter Booking Number');
         return;
     }
+    const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            alert(this.responseText);
+        }
+        xhttp.open("GET", "updateform.php?opt=4&a="+str1);
+        xhttp.send();
+
 }
+
+
+
 function addRoom()
 {
     var str1 = document.getElementById('RNo').value;
@@ -214,6 +405,13 @@ function addRoom()
         alert('Enter Ironing table availability');
         return;
     }
+
+    const xhttp = new XMLHttpRequest();
+        xhttp.onload = function() {
+            alert(this.responseText);
+        }
+        xhttp.open("GET", "updateform.php?opt=2&a="+str1+"&b="+str2+"&c="+str3+"&d="+str4+"&e="+str5+"&f="+str6+"&g="+str7+"&h="+str8+"&i="+str9);
+        xhttp.send();
 
 }  
 

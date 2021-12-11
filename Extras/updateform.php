@@ -4,7 +4,6 @@ $option = $_REQUEST["opt"];
 // echo $option;
 if($option == '2')
 {
-    echo "ROOOOOM";
     $str1 = $_REQUEST["a"];
     $str2 = $_REQUEST["b"];
     $str3 = $_REQUEST["c"];
@@ -60,6 +59,74 @@ else if($option == '3')
 
                                 CloseCon($conn); 
 }
+
+else if($option == '4')
+{
+    $str1 = $_REQUEST["a"];
+    include './Connection.php';
+                $conn = OpenCon();
+
+    $sql = "delete from `booking`  where Booking_ID='$str1';";
+                            
+                            
+                            if ($conn->query($sql) === TRUE) 
+                            {
+                                //room book with existing user
+                                // header('Location: index.php?var=3');
+                                echo " Booking deleted Successful";
+                                } 
+                                else 
+                                {
+                                    echo "Some Error Occured, can't delete booking, please try again";
+                                //echo "Error: " . $sql . "<br>" . $conn->error;
+                                }
+
+                                CloseCon($conn); 
+}
+
+else if($option == '5')
+{
+    $str1 = $_REQUEST["a"];
+    include './Connection.php';
+                $conn = OpenCon();
+
+                                   
+
+                                $sql = "SELECT * FROM user where User_ID='$str1'";
+                                $result = $conn->query($sql);
+                                
+                                $bid = '';
+                                if ($result->num_rows > 0)
+                                  {
+                                  // output data of each row
+      
+                                  while($row = $result->fetch_assoc())
+                                    {
+                                        echo "<h3>Here is the User Detail.</h3>";
+                                        echo "<table class=table table-bordered table-dark' border='2'>";
+                                        echo "<tr>";
+                                        echo "<td width='40%'>First Name</td>";
+                                        echo "<td width='40%'>" . $row["First_Name"] . "</td>";
+                                        echo "</tr>";
+                                        echo "<tr>";
+                                        echo "<td>Last Name</td>";
+                                        echo "<td>" . $row["Last_Name"] . "</td>";
+                                        echo "</tr>";
+                                        echo "<tr>";
+                                        echo "<td>Email</td>";
+                                        echo "<td>" . $row["E_mail_ID"] . "</td>";
+                                        echo "</tr>";
+                                        echo "</table>";
+                                      
+                                    }
+                                } 
+                                else 
+                                {
+                                  echo "No Such User";
+                                }
+                                CloseCon($conn);
+}
+
 
 else if($option == 'addroom')
 {
