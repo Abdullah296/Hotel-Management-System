@@ -1,10 +1,10 @@
 <?php
    function OpenCon()
     {
-    $dbhost = "127.0.0.1:3333";
+    $dbhost = "127.0.0.1:3307";
     $dbuser = "root";
     $dbpass = "";
-    $db = "hms";
+    $db = "wordpress";
     $conn = new mysqli($dbhost, $dbuser, $dbpass,$db) or die("Connect failed: %s\n". $conn -> error);
     
     return $conn;
