@@ -5,6 +5,7 @@
       <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
       <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Raleway">
       <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+      <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
       <meta charset="UTF-8">
       <meta http-equiv="X-UA-Compatible" content="IE=edge">
       <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -40,16 +41,16 @@
    <body>
    <div class="container">
          <img src="./image/download.jpg" alt="Snow" style="width:100%; height: 400px;">
-         <div class="centered"><h2 style="color:green"><b>Welcome to Engineer Hotel</b></h2></div>
+         <div class="centered"><h2 style="color: #ff00a5"><b>Welcome to Engineer Hotel</b></h2></div>
    </div>
 
       <div class="w3-display-container w3-content w3-hide-small" style="max-width:1500px">
          <img class="w3-image" src="./image/download (2).jpg" alt="London" style="width:100%; height: 350px;">
          <div class="w3-display-middle" style="width:65%">
             <div class="w3-bar w3-black">
-               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Flight');"><i class="fa fa-plane w3-margin-right"></i>Find Rooms</button>
+               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Flight');"><i class="fas fa-hotel w3-margin-right"></i>Find Rooms</button>
                <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Hotel');"><i class="fa fa-bed w3-margin-right"></i>Check Reservation</button>
-               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Car');"><i class="fa fa-car w3-margin-right"></i>Cancel Reservation</button>
+               <button class="w3-bar-item w3-button tablink" onclick="openLink(event, 'Car');"><i class="fas fa-luggage-cart w3-margin-right"></i>Cancel Reservation</button>
             </div>
             <div id="Flight" class="w3-container w3-white w3-padding-16 myLink">
                <h3>Find Rooms</h3>
@@ -100,7 +101,10 @@
          </div>
       </div>
       <div id="txtHint">
-         <h5>     &emsp;&emsp; Please Enter Date and Check to find the Available room.<br><br><br><br><br><br><br></h5>
+         <h5>     &emsp;&emsp; Please Enter Date and then click on Check Now to find the Available room.</h5>
+      </div>
+      <div class="hi">
+         <br><br><br><br><br><br><br>
       </div>
       <?php
          $var = isset($_GET['var']) ? $_GET['var'] : '';
@@ -212,7 +216,9 @@
                  }
                  const xhttp = new XMLHttpRequest();
                  xhttp.onload = function() {
-                     document.getElementById("txtHint").innerHTML = this.responseText;
+                     //const myArray = this.responseText.split("GOOD");
+                     //document.getElementById("txtHint").innerHTML = this.responseText.slice(0, this.responseText.indexOf('GOOD'));
+                     document.getElementById("txtHint").innerHTML = this.responseText.split('\n')[0];
                  }
                  xhttp.open("GET", "./Ajax/Cancelreservation.php?q="+str+"&p="+str1);
                  xhttp.send();

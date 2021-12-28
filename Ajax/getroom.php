@@ -11,9 +11,9 @@ room.*
 FROM
   room
 LEFT JOIN
-  Booking
+booking
   ON (
-      Booking.Room_Number = room.Room_Number AND
+   booking.Room_Number = room.Room_Number AND
       NOT (
           (booking.From_Date < ? and booking.To_Date < ?)
           OR
@@ -66,8 +66,8 @@ while ($stmt->fetch()) {
                            }
 
     echo             "</td>".
-                     "<td width='30%'>". $a3.
-                     "<br><br><button onclick=\"location.href='101.php?varname=".$a1."'\">Check Now</button>
+                     "<td width='30%'> $". $a3.
+                     "<br><br><button onclick=\"location.href='./Ajax/101.php?varname=".$a1."'\">Check Now</button>
                      </td>
                 </tr>";
   }

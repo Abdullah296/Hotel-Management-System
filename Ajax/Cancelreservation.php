@@ -2,6 +2,12 @@
 include 'Connection.php';
 $mysqli = OpenCon();
 
+use PHPMailer\PHPMailer\PHPMailer;
+                        use PHPMailer\PHPMailer\Exception;
+                        require 'PHPMailer-master/src/Exception.php';
+                        require 'PHPMailer-master/src/PHPMailer.php';
+                        require 'PHPMailer-master/src/SMTP.php';
+
 $sql = "SELECT * FROM  booking WHERE Booking_ID = ? And User_ID= ?";
 
 $stmt = $mysqli->prepare($sql);
@@ -50,10 +56,70 @@ else
          
          
          if ($mysqli->query($sql) === TRUE) {
-             echo "New record created successfully";
+             echo "Recorded Deleted, Kindly contact at this email abd296@yahoo.com for Money return. <br><br><br><br><br><br><br><br><br><br><br><br><br><br><br><br> ";
            } else {
              echo "Error: " . $sql . "<br>" . $conn->error;
            }
+
+
+
+           $mail = new PHPMailer();
+           $mail->IsSMTP();
+           $mail->Mailer = "smtp";
+
+           $mail->SMTPDebug  = 1;  
+           $mail->SMTPAuth   = TRUE;
+           $mail->SMTPSecure = "tls";
+           $mail->Port       = 587;
+           $mail->Host       = "smtp.gmail.com";
+           $mail->Username   = "engineerhotelmail@gmail.com";
+           $mail->Password   = "chaudary123";
+           
+           
+           $mail->IsHTML(true);
+           $mail->AddAddress("abd296@yahoo.com", "Abdullah");
+           $mail->SetFrom("engineerhotelmail@gmail.com", "Engineer Hotel");
+           //$mail->AddReplyTo("reply-to-email@domain", "reply-to-name");
+           //$mail->AddCC("cc-recipient-email@domain", "cc-recipient-name");
+           $mail->Subject = "Person record Deleted";
+           $content = "<b>Dear Maalik,<br> One person deleted a record, here is the detailed of that booking</b><br> Customer Id: ".$a7."<br> Room Number: ".$a6."<br> Price: ".$a5."<br> From Date: ".$a2."<br> To Date".$a3."<br>Kindly look into this matter, and return the money according to the policy";
+
+           $mail->MsgHTML($content); 
+           if(!$mail->Send()) {
+             //echo "Error while sending Email.";
+             var_dump($mail);
+           } else {
+             //echo "Verify your Email.";
+           }
+/*
+
+  $mail = new PHPMailer();
+  $mail->IsSMTP();
+  $mail->Mailer = "smtp";
+  
+  $mail->SMTPDebug  = 1;  
+  $mail->SMTPAuth   = TRUE;
+  $mail->SMTPSecure = "tls";
+  $mail->Port       = 587;
+  $mail->Host       = "smtp.gmail.com";
+  $mail->Username   = "engineerhotelmail@gmail.com";
+  $mail->Password   = "chaudary123";
+  
+  
+  $mail->IsHTML(true);
+  $mail->AddAddress("abd296@yahoo.com", "Owner");
+  $mail->SetFrom("engineerhotelmail@gmail.com", "Engineer Hotel");
+  $mail->Subject = "Person Deleted record.";
+  $content = "<b>Dear Owner, One person deleted a record, here is the detailed of that booking.</b><br> Customer Id: " . $a7 ."<br> Room Number: " . $a6 ."<br> Price: " . $a5 ."<br> From Date: " . $a2 ."<br> To Date" . $a3 ."<br>Kindly look into this matter, and return the money according to the policy";
+  
+  $mail->MsgHTML($content); 
+  if(!$mail->Send()) {
+    //echo "Error while sending Email.";
+    var_dump($mail);
+  } else {
+    //echo "Verify your Email.";
+  }
+  */
 }
 
 
