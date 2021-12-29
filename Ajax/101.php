@@ -174,7 +174,7 @@
             <div class="form-row">
                <div class="form-group col-md-6">
                   <label for="Fromdate">From Date:</label>
-                  <input class="w3-input w3-border" required class="form-control" name="Fromdate" type="date" id="Fromdate" min="<?php echo date("Y-m-d"); ?>">
+                  <input class="w3-input w3-border" required class="form-control" onchange="mintodate()" name="Fromdate" type="date" id="Fromdate" min="<?php echo date("Y-m-d"); ?>">
                </div>
                <div class="form-group col-md-6">
                   <label for="todate">To Date:</label>
@@ -244,6 +244,16 @@
          document.getElementById("BUTTON2").style.display="none";
          document.getElementById("BUTTON3").style.display="none";
 
+         function mintodate()
+                  {
+                     var str = document.getElementById('Fromdate').value;
+
+                     if(str != "")
+                     {
+                        document.getElementById('todate').setAttribute("min", str);
+                     }
+
+                  }
 
          function forgetUID()
          {

@@ -253,13 +253,13 @@ if(!isset($_SESSION["sess_user"])){
                   </div>
                   <div class="w3-half">
                      <label>To: </label>
-                     <input class="w3-input w3-border" type="date" name="RDate" id="RDate1" min="<?php echo date("Y-m-d"); ?>" >
+                     <input class="w3-input w3-border" type="date" name="RDate" id="RDate" min="<?php echo date("Y-m-d"); ?>" >
                   </div>
                   
                </div>
                <br>
                 <br>
-               <p><button  class="w3-button w3-dark-grey"  onclick='showRoom();'>Search rooms</button></p>
+               <p><button  class="w3-button w3-dark-grey"  onclick='showRoom1();'>Search rooms</button></p>
                <div id="txtHint">
                 </div>
                
@@ -325,6 +325,27 @@ if(!isset($_SESSION["sess_user"])){
                  const xhttp = new XMLHttpRequest();
                  xhttp.onload = function() {
                      document.getElementById("txtHint").innerHTML = this.responseText;
+                     //document.getElementById("txtHint").innerHTML = "You are good";
+                 }
+                 xhttp.open("GET", "./Ajax/getroom.php?q="+str+"&p="+str1);
+                 xhttp.send();
+    }
+    function showRoom1()
+    {
+                 var str = document.getElementById('RDate').value;
+                 var str1 = document.getElementById('RDate').value;
+         
+                 if (str == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter From Date";
+                     return;
+                 }
+                 if (str1 == "") {
+                     document.getElementById("txtHint").innerHTML = "Please Enter To Date";
+                     return;
+                 }
+                 const xhttp = new XMLHttpRequest();
+                 xhttp.onload = function() {
+                     document.getElementById("txtHint").innerHTML = "Under Development";
                      //document.getElementById("txtHint").innerHTML = "You are good";
                  }
                  xhttp.open("GET", "./Ajax/getroom.php?q="+str+"&p="+str1);
